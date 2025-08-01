@@ -1,0 +1,54 @@
+<h1>スキルで繋がるエンジニアのマッチングアプリ</h1>
+
+<% if user_signed_in? %>
+  <p>ようこそ、<%= current_user.name %>さん</p>
+  <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
+  <%= link_to "プロフィール編集", edit_user_registration_path %>
+<% else %>
+  <%= link_to "ログイン", new_user_session_path %>
+  <%= link_to "新規登録", new_user_registration_path %>
+<% end %>
+
+<h2>フリーワード検索</h2>
+<%= form_with url: search_users_path, method: :get, local: true do |f| %>
+  <%= f.label :query, "検索ワード" %>
+  <%= f.text_field :query, placeholder: "名前やスキルで検索", required: false %>
+  <%= f.submit "検索" %>
+<% end %> 
+
+<h2>スキルで検索</h2>
+<%= form_with url: search_skills_path, method: :get, local: true do |f| %>
+  <%= f.label :skill, "スキル" %>
+  <%= f.select :skill, options_for_select([["選択してください", ""]] + @skills.map { |skill| [skill, skill] }), {}, { required: false } %>
+  <%= f.submit "検索" %>
+<% end %>
+
+<h2>新しい順にユーザーを表示</h2>
+<%= form_with url: users_path, method: :get, local: true do |f| %>
+  <%= f.submit "新しい順に表示" %>
+<% end %>
+
+
+<% if @users.any? %>
+  <div>
+    <h2>繋がれるユーザー</h2>
+    <% @users.each do |user| %>
+      <div>
+        <h3><%= user.name %></h3>
+        <p><%= user.introduction %></p>
+        <p>スキル: <%= user.skills %></p>
+        <p>年齢: <%= user.age %></p>
+        <%= image_tag user.img_url, alt: "#{user.name}の画像" %>
+        <div>
+          <%= link_to "詳細", user_path(user) %>
+          <%= link_to "メッセージを送る", new_message_path(user_id: user.id) %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <div>
+    <h2>繋がれるユーザーはまだいません</h2>
+  </div>
+<% end %>   
+

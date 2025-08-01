@@ -1,0 +1,54 @@
+<h2>新規登録</h2>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <%= render "devise/shared/error_messages", resource: resource %>
+
+  <div class="field">
+    <%= f.label :name, "名前" %><br />
+    <%= f.text_field :name, autofocus: true, required: true %>
+  </div>
+
+  <div class="field">
+    <%= f.label :email, "メールアドレス" %><br />
+    <%= f.email_field :email, autocomplete: "email", required: true %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password, "パスワード" %>
+    <% if @minimum_password_length %>
+    <em>(<%= @minimum_password_length %>文字以上)</em>
+    <% end %><br />
+    <%= f.password_field :password, autocomplete: "new-password", required: true %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password_confirmation, "パスワード確認" %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "new-password", required: true %>
+  </div>
+
+  <div class="field">
+    <%= f.label :img_url, "プロフィール画像URL" %><br />
+    <%= f.text_field :img_url, required: true %>
+  </div>
+
+  <div class="field">
+    <%= f.label :introduction, "自己紹介" %><br />
+    <%= f.text_area :introduction %>
+  </div>
+
+  <div class="field">
+    <%= f.label :skills, "スキル" %><br />
+    <%= f.text_field :skills, required: true %>
+  </div>
+
+  <div class="field">
+    <%= f.label :age, "年齢" %><br />
+    <%= f.number_field :age, min: 0, max: 120 %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "登録" %>
+  </div>
+<% end %>
+
+<%= render "devise/shared/links" %>
