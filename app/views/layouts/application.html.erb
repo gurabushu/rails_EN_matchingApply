@@ -23,6 +23,28 @@
   </head>
 
   <body>
+    <% if user_signed_in? %>
+      <header class="main-header">
+        <div class="header-container">
+          <div class="header-left">
+            <%= link_to "SkillConnect", root_path, class: "logo" %>
+          </div>
+          <nav class="header-nav">
+            <%= link_to "ホーム", root_path, class: "nav-item" %>
+            <%= link_to "ユーザー一覧", users_path, class: "nav-item" %>
+            <%= link_to "メッセージ", messages_path, class: "nav-item" %>
+          </nav>
+          <div class="header-right">
+            <div class="user-menu">
+              <span class="current-user">ようこそ、<%= current_user.name %>さん</span>
+              <%= link_to "プロフィール編集", edit_user_registration_path, class: "nav-item" %>
+              <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "nav-item logout-btn" %>
+            </div>
+          </div>
+        </div>
+      </header>
+    <% end %>
+
     <% if notice %>
       <p class="notice"><%= notice %></p>
     <% end %>
